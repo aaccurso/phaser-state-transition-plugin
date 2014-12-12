@@ -1,14 +1,14 @@
 {
-  "name": "phaser-state-transition",
+  "name": "phaser-state-transition-plugin",
   "version": "0.1.0",
   "description": "State Transition plugin for Phaser.js",
-  "main": "dist/phaser-state-transition.min.js",
+  "main": "dist/phaser-state-transition-plugin.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/aaccurso/phaser-state-transition.git"
+    "url": "https://github.com/aaccurso/phaser-state-transition-plugin.git"
   },
   "keywords": [
     "phaser",
@@ -19,9 +19,9 @@
   "author": "aaccurso",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/aaccurso/phaser-state-transition/issues"
+    "url": "https://github.com/aaccurso/phaser-state-transition-plugin/issues"
   },
-  "homepage": "https://github.com/aaccurso/phaser-state-transition",
+  "homepage": "https://github.com/aaccurso/phaser-state-transition-plugin",
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-contrib-uglify": "^0.6.0",

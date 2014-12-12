@@ -1,2 +1,2 @@
-phaser-state-transition
-=======================
+phaser-state-transition-plugin
+==============================

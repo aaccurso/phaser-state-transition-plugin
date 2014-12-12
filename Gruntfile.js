@@ -9,7 +9,7 @@ module.exports = function (grunt) {
     uglify: {
       dist: {
         files: {
-          'dist/phaser-state-transition.min.js': ['src/phaser-state-transition.js']
+          'dist/phaser-state-transition-plugin.min.js': ['src/phaser-state-transition-plugin.js']
         }
       }
     }

@@ -1,12 +1,12 @@
 {
-  "name": "phaser-state-transition",
+  "name": "phaser-state-transition-plugin",
   "version": "0.1.0",
-  "homepage": "https://github.com/aaccurso/phaser-state-transition",
+  "homepage": "https://github.com/aaccurso/phaser-state-transition-plugin",
   "authors": [
     "aaccurso <accurso.alan@gmail.com>"
   ],
   "description": "State Transition plugin for Phaser.js",
-  "main": "dist/phaser-state-transition.min.js",
+  "main": "dist/phaser-state-transition-plugin.min.js",
   "keywords": [
     "phaser",
     "state",
