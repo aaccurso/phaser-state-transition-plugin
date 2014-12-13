@@ -1,31 +1,25 @@
-(function(window, Phaser) {
+/**
+  * StateTransition Plugin for Phaser
+  */
+(function (window, Phaser) {
   'use strict';
-  /**
-    * StateTranistion Plugin for Phaser
-    */
+
+  /* Default settings object */
+  var settings = {
+    duration: Phaser.Timer.SECOND * 0.3,
+    ease: Phaser.Easing.Exponential.InOut,
+    properties: {
+      alpha: 0
+    }
+  };
+
   Phaser.Plugin.StateTransition = function (game, parent) {
-    /* Extend the plugin */
     Phaser.Plugin.call(this, game, parent);
   };
 
-  //Extends the Phaser.Plugin template, setting up values we need
   Phaser.Plugin.StateTransition.prototype = Object.create(Phaser.Plugin.prototype);
+
   Phaser.Plugin.StateTransition.prototype.constructor = Phaser.Plugin.StateTransition;
-
-  /**
-    * Calls the _draw method which handles the state changes and transitions
-    */
-  Phaser.Plugin.StateTransition.prototype.to = function () {
-    _draw.apply(this, arguments);
-  };
-
-  /**
-    * Can be called in the create function of states that you transition to, to ensure
-    * that the transition-sprite is on top of everything
-    */
-  Phaser.Plugin.StateTransition.prototype.bringToTop = function () {
-    _bringCoverToTop.call(this);
-  };
 
   Phaser.Plugin.StateTransition.prototype.settings = function (options) {
     if (options) {
@@ -39,24 +33,10 @@
     }
   };
 
-  /* Settings object */
-  var settings = {
-    duration: 300, /* ms */
-    ease: Phaser.Easing.Exponential.InOut,
-    properties: {
-      alpha: 0
-    }
-  };
-
-  /* Move the Texture-Sprite to the top */
-  function _bringCoverToTop() {
-    if (this._cover) {
-      this._cover.bringToTop();
-    }
-  }
-
-  /* Draw the world state */
-  function _draw() {
+  /**
+    * Handles the state changes and transitions
+    */
+  Phaser.Plugin.StateTransition.prototype.to = function () {
     var state = arguments[0];
 
     /* Pause the game at first */
@@ -90,7 +70,7 @@
 
         _this.game.add.existing(_this._cover);
 
-        _animateCover.call(_this);
+        _this._animateCover();
       };
 
       this.game.state.start.apply(this.game.state, arguments);
@@ -98,10 +78,19 @@
 
     /* Resume the game */
     this.game.paused = false;
-  }
+  };
 
-  function _animateCover() {
-    /* Animate */
+  /**
+    * Can be called in the create function of states that you transition to, to ensure
+    * that the transition-sprite is on top of everything
+    */
+  Phaser.Plugin.StateTransition.prototype.bringToTop = function () {
+    if (this._cover) {
+      this._cover.bringToTop();
+    }
+  };
+
+  Phaser.Plugin.StateTransition.prototype._animateCover = function () {
     if (settings && settings.properties) {
       for (var property in settings.properties) {
         if (typeof settings.properties[property] !== 'object') {
@@ -121,18 +110,17 @@
         }
       }
 
-      this._tween.onComplete.addOnce(_destroy, this);
+      this._tween.onComplete.addOnce(this._destroy, this);
     }
-  }
+  };
 
-  /* Destroy all the data */
-  function _destroy() {
+  Phaser.Plugin.StateTransition.prototype._destroy = function () {
     if (this._cover) {
       this._cover.destroy();
     }
     if (this._texture) {
       this._texture.destroy();
     }
-  }
+  };
 
 }(window, Phaser));
