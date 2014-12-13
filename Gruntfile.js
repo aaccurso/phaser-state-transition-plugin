@@ -50,5 +50,6 @@ module.exports = function (grunt) {
   });
 
   // Register grunt tasks
-  grunt.registerTask('default', ['jshint', 'jscs', 'uglify']);
+  grunt.registerTask('default', 'build');
+  grunt.registerTask('build', ['jshint', 'jscs', 'uglify']);
 };
