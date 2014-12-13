@@ -1,6 +1,9 @@
 'use strict';
 
 module.exports = function (grunt) {
+  var srcFiles = ['src/*.js', 'Gruntfile.js'],
+      bumpFiles = ['package.json', 'bower.json'];
+
   // Load grunt tasks automatically
   require('load-grunt-tasks')(grunt);
 
@@ -19,7 +22,7 @@ module.exports = function (grunt) {
         reporter: require('jscs-stylish').path
       },
       all: {
-        src: ['src/*.js', 'Gruntfile.js']
+        src: srcFiles
       }
     },
     jshint: {
@@ -27,8 +30,23 @@ module.exports = function (grunt) {
         jshintrc: '.jshintrc',
         reporter: require('jshint-stylish')
       },
-      src: ['src/*.js', 'Gruntfile.js']
-    }
+      src: srcFiles
+    },
+    bump: {
+      options: {
+        files: bumpFiles,
+        updateConfigs: [],
+        commit: true,
+        commitMessage: 'Release %VERSION%',
+        commitFiles: bumpFiles,
+        createTag: true,
+        tagName: '%VERSION%',
+        tagMessage: 'Version %VERSION%',
+        push: true,
+        pushTo: 'upstream',
+        gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d'
+      }
+    },
   });
 
   // Register grunt tasks
