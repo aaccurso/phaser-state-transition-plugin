@@ -27,11 +27,11 @@
     _bringCoverToTop.call(this);
   };
 
-  Phaser.Plugin.StateTransition.prototype.settings = function (opt) {
-    if (opt) {
-      for (var p in opt) {
-        if (settings[p]) {
-          settings[p] = opt[p];
+  Phaser.Plugin.StateTransition.prototype.settings = function (options) {
+    if (options) {
+      for (var property in options) {
+        if (settings[property]) {
+          settings[property] = options[property];
         }
       }
     } else {
@@ -69,12 +69,12 @@
 
     /* Create current state texture */
     this._texture = new Phaser.RenderTexture(this.game, this.game.width, this.game.height, 'cover');
+
     /* Draw the current world to the render */
     this._texture.renderXY(this.game.world, -this.game.camera.x, -this.game.camera.y);
 
     /* If there's a state as a paramterer change the state and do the dew */
     if (state) {
-
       var _create = this.game.state.states[state].create, _this = this;
 
       this._cover = new Phaser.Sprite(this.game, 0, 0, this._texture);
@@ -103,10 +103,10 @@
   function _animateCover() {
     /* Animate */
     if (settings && settings.properties) {
-      for (var p in settings.properties) {
-        if (typeof settings.properties[p] !== 'object') {
+      for (var property in settings.properties) {
+        if (typeof settings.properties[property] !== 'object') {
           var _dummy = {};
-          _dummy[p] = settings.properties[p];
+          _dummy[property] = settings.properties[property];
           this._tween = this.game.add
             .tween(this._cover)
             .to(_dummy,
@@ -114,8 +114,8 @@
               settings.ease, true);
         } else {
           this._tween = this.game.add
-            .tween(this._cover[p])
-            .to(settings.properties[p],
+            .tween(this._cover[property])
+            .to(settings.properties[property],
               settings.duration,
               settings.ease, true);
         }
