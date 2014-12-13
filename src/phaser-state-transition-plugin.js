@@ -29,7 +29,7 @@
 
   Phaser.Plugin.StateTransition.prototype.settings = function (opt) {
     if (opt) {
-      for(var p in opt) {
+      for (var p in opt) {
         if (settings[p]) {
           settings[p] = opt[p];
         }
@@ -104,7 +104,7 @@
     /* Animate */
     if (settings && settings.properties) {
       for (var p in settings.properties) {
-        if (typeof settings.properties[p] !== "object") {
+        if (typeof settings.properties[p] !== 'object') {
           var _dummy = {};
           _dummy[p] = settings.properties[p];
           this._tween = this.game.add
@@ -127,10 +127,10 @@
 
   /* Destroy all the data */
   function _destroy() {
-    if(this._cover) {
+    if (this._cover) {
       this._cover.destroy();
     }
-    if(this._texture) {
+    if (this._texture) {
       this._texture.destroy();
     }
   }
