@@ -16,6 +16,21 @@ module.exports = function (grunt) {
         }
       }
     },
+    karma: {
+      options: {
+        frameworks: ['jasmine'],
+        files: [
+          'bower_components/phaser-official/build/phaser.js',
+          'src/phaser-state-transition-plugin.js',
+          'test/**/*.js'
+        ]
+      },
+      unit: {
+        runnerPort: 9999,
+        singleRun: true,
+        browsers: ['PhantomJS']
+      }
+    },
     jscs: {
       options: {
         config: '.jscsrc',
