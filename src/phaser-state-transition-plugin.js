@@ -73,7 +73,9 @@
 
     // Extend state create method to add and animate cover
     this.game.state.states[state].create = function() {
-      _create.call(_this.game.state.states[state]);
+      if (_create) {
+        _create.call(_this.game.state.states[state]);
+      }
       _this.game.add.existing(_this._cover);
       _this._animateCover();
     };
