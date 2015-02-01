@@ -41,6 +41,7 @@
   Phaser.Plugin.StateTransition.prototype.to = function () {
     var state = arguments[0],
         _this = this,
+        _preload,
         _create;
 
     if (!state) {
@@ -59,24 +60,26 @@
     // Draw the current world to the render
     this._texture.renderXY(this.game.world, -this.game.camera.x, -this.game.camera.y);
 
-    // Create current state cover sprite
-    this._cover = new Phaser.Sprite(this.game, 0, 0, this._texture);
-    this._cover.fixedToCamera = true;
-    this._cover.anchor.set(0.5);
-
-    // Instead of x/y we need to set the cameraOffset point
-    this._cover.cameraOffset.x = this.game.width / 2;
-    this._cover.cameraOffset.y = this.game.height / 2;
-
-    // Save original implementation of state create method
+    // Save original implementation of state's preload and create methods
+    _preload = this.game.state.states[state].preload;
     _create = this.game.state.states[state].create;
+
+    if (_preload) {
+      // Extend state preload method to add cover
+      this.game.state.states[state].preload = function() {
+        // Add the cover first to be able to show a preload image
+        this.game.add.existing(_this._newCover());
+        _preload.call(_this.game.state.states[state]);
+      };
+    }
 
     // Extend state create method to add and animate cover
     this.game.state.states[state].create = function() {
       if (_create) {
         _create.call(_this.game.state.states[state]);
       }
-      _this.game.add.existing(_this._cover);
+      // Add the cover last to hide the state while being created
+      this.game.add.existing(_this._newCover());
       _this._animateCover();
     };
 
@@ -84,6 +87,20 @@
 
     // Resume the game
     this.game.paused = false;
+  };
+
+  /**
+    * Create previous state cover
+    */
+  Phaser.Plugin.StateTransition.prototype._newCover = function () {
+    // Create current state cover sprite
+    this._cover = new Phaser.Sprite(this.game, 0, 0, this._texture);
+    this._cover.fixedToCamera = true;
+    this._cover.anchor.set(0.5);
+    // Instead of x/y we need to set the cameraOffset point
+    this._cover.cameraOffset.x = this.game.width / 2;
+    this._cover.cameraOffset.y = this.game.height / 2;
+    return this._cover;
   };
 
   /**
