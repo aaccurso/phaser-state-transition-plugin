@@ -27,7 +27,7 @@ Add it to your index.html (after phaser.js):
 
 ## Usage
 
-[Demo](aaccurso.github.io/phaser-state-transition-plugin/demo)!!
+[Demo](http://aaccurso.github.io/phaser-state-transition-plugin/demo/)!!
 
 Initialize it (if you have a boot state that's where you want to do it):
 ```js
