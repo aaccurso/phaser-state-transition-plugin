@@ -1,0 +1,98 @@
+<!doctype>
+<html>
+  <head>
+    <title>Phaser State Transition Plugin Demo</title>
+    <style>
+      body {
+        background-color: black;
+      }
+      header {
+        color: white;
+      }
+      #game {
+        display: block;
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+      #game canvas {
+        max-width: 100%;
+      }
+    </style>
+    <script src="//cdn.jsdelivr.net/phaser/2.2.2/phaser.js"></script>
+    <script src="src/phaser-state-transition-plugin.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Phaser State Transition Plugin Demo</h1>
+    </header>
+    <div id="game"></div>
+    <script>
+      window.onload = function () {
+        var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'game');
+
+        game.state.add('boot', boot);
+        game.state.add('stateWithoutPreloadA', stateWithoutPreloadA);
+        game.state.add('stateWithoutPreloadB', stateWithoutPreloadB);
+
+        game.state.start('boot');
+      };
+      function boot () {
+        this.init = function () {
+          // Configures ScaleManager
+          this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+          this.scale.pageAlignHorizontally = true;
+          this.scale.pageAlignVertically = true;
+          this.scale.forceOrientation(true);
+
+          // Initializes StateTransition Plugin
+          this.game.stateTransition = this.game.plugins.add(Phaser.Plugin.StateTransition);
+          this.game.stateTransition.configure({
+            duration: Phaser.Timer.SECOND * 0.8,
+            ease: Phaser.Easing.Exponential.InOut,
+            properties: {
+              alpha: 0,
+              scale: {
+                x: 1.4,
+                y: 1.4
+              }
+            }
+          });
+        };
+        this.preload = function () {
+          this.load.image('preloader', 'assets/preloader.png');
+          this.load.image('blue', 'assets/element_blue.png');
+          this.load.image('red', 'assets/element_red.png');
+          this.load.spritesheet('button', 'assets/button_sprite_sheet.png', 193, 71);
+        };
+        this.create = function () {
+          this.state.start('stateWithoutPreloadA');
+        };
+      }
+      function stateWithoutPreloadA () {
+        this.create = function () {
+          this.tile = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'blue');
+          this.game.add.button(96, 96, 'button', function() {
+            this.game.stateTransition.to('stateWithoutPreloadB');
+          }, this, 2, 1, 0);
+          this.game.add.text(10, 10, 'stateWithoutPreloadA');
+        };
+        this.update = function () {
+          this.tile.tilePosition.x -= 1;
+        };
+      }
+      function stateWithoutPreloadB () {
+        this.create = function () {
+          this.tile = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'blue');
+          this.game.add.button(250, 250, 'button', function() {
+            this.game.stateTransition.to('stateWithoutPreloadA');
+          }, this, 2, 1, 0);
+          this.game.add.text(10, 10, 'stateWithoutPreloadB');
+        };
+        this.update = function () {
+          this.tile.tilePosition.x -= 1;
+        };
+      }
+    </script>
+  </body>
+</html>
