@@ -9,6 +9,9 @@ module.exports = function (grunt) {
 
   // Define the configuration for all the tasks
   grunt.initConfig({
+    copy: {
+      files: { src: 'src/phaser-state-transition-plugin.js', dest: 'dist/phaser-state-transition-plugin.js' }
+    },
     uglify: {
       dist: {
         files: {
@@ -51,5 +54,5 @@ module.exports = function (grunt) {
 
   // Register grunt tasks
   grunt.registerTask('default', 'build');
-  grunt.registerTask('build', ['jshint', 'jscs', 'uglify']);
+  grunt.registerTask('build', ['jshint', 'jscs', 'uglify', 'copy']);
 };
