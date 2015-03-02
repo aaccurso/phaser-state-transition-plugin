@@ -74,14 +74,14 @@
     this.game.state.states[stateName].init = function() {
       this.game.add.existing(_this._newCover());
       if (_init) {
-        _init.call(this);
+        _init.apply(this, arguments);
       }
     };
 
     // Extend state create method to animate cover
     this.game.state.states[stateName].create = function() {
       if (_create) {
-        _create.call(this);
+        _create.apply(this, arguments);
       }
       _this.bringToTop();
       _this._animateCover();
