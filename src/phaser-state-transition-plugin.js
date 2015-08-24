@@ -97,8 +97,12 @@
     */
   Phaser.Plugin.StateTransition.prototype._newCover = function () {
     // Create current state cover sprite
-    this._cover = new Phaser.Sprite(this.game, this.game.world.centerX, this.game.world.centerY, this._texture);
-    this._cover.anchor.setTo(0.5);
+    this._cover = new Phaser.Sprite(this.game, 0, 0, this._texture);
+    this._cover.fixedToCamera = true;
+    this._cover.anchor.set(0.5);
+    // Instead of x/y we need to set the cameraOffset point
+    this._cover.cameraOffset.x = this.game.width / 2;
+    this._cover.cameraOffset.y = this.game.height / 2;
     return this._cover;
   };
 
