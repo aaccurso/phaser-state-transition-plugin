@@ -86,7 +86,7 @@
             if (_create) {
                _create.apply(this, arguments);
             }
-         }, _this);
+         }, this);
     };
 
     // Resume the game and start next state
