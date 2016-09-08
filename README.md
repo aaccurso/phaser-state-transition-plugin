@@ -70,11 +70,15 @@ state2.prototype = Object.create(Phaser.State);
 state2.prototype.constructor = state2;
 
 state2.prototype = {
+  init: function() {
+    this.READY = false;
+  },
+  
   preload: function() {
     // ...
   },
    
-  create : function() {
+  create: function() {
     // ...
     this.READY = true;
   },
