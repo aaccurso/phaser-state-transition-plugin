@@ -1,3 +1,7 @@
+# DEPRECATED!
+
+Use original [phaser-state-transition](https://github.com/cristianbote/phaser-state-transition) plugin, which is up-to-date with the latest version of Phaser.js.
+
 # phaser-state-transition-plugin
 
 > State transition plugin for Phaser.js
