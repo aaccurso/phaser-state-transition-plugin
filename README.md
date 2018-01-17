@@ -63,6 +63,38 @@ or if you need to pass more arguments like in the original State.start method:
 // to(key, clearWorld, clearCache, parameter)
 this.game.stateTransition.to('state2', true, false, {levelId: 2});
 ```
+
+and put this in your state2.js to be avoid calling update() before create()
+```js
+var state2 = function(game) {
+   Phaser.State.call();
+}
+
+state2.prototype = Object.create(Phaser.State);
+state2.prototype.constructor = state2;
+
+state2.prototype = {
+  init: function() {
+    this.READY = false;
+  },
+  
+  preload: function() {
+    // ...
+  },
+   
+  create: function() {
+    // ...
+    this.READY = true;
+  },
+   
+  update: function() {
+    if (this.READY) {
+      // ...
+    }
+  }
+}
+```
+
 > This isn't supported in the original plugin, and it was the main reason we decided to refactor it.
 
 ## Happy transitioning

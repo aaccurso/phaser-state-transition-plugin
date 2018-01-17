@@ -80,11 +80,13 @@
 
     // Extend state create method to animate cover
     this.game.state.states[stateName].create = function() {
-      if (_create) {
-        _create.apply(this, arguments);
-      }
       _this.bringToTop();
-      _this._animateCover();
+         this.tween = _this._animateCover();
+         this.tween.onComplete.addOnce(function() {
+            if (_create) {
+               _create.apply(this, arguments);
+            }
+         }, this);
     };
 
     // Resume the game and start next state
